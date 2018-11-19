@@ -10,6 +10,7 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Snackbar from "@material-ui/core/Snackbar";
+import Select from "@material-ui/core/Select";
 import PACKAGE from "../../../package.json";
 
 const API_URL = "http://localhost:3001/api";
@@ -56,6 +57,7 @@ class ReportarNovedad extends Component {
       Tipo: "",
       Descripcion:"",
       Zona:"",
+      Zonas:[],
       open: false
     };
 
@@ -67,6 +69,14 @@ class ReportarNovedad extends Component {
     this.setState({ open: false });
   }
 
+  getZonas() {
+    axios.get(`${API_URL}/zonas`).then(res => {
+      const { data } = res;
+      this.setState({
+        estaciones: data
+      });
+    });
+  }
   crearNovedad(e) {
     e.preventDefault();
 
@@ -137,13 +147,19 @@ class ReportarNovedad extends Component {
               </FormControl>
               <FormControl margin="Zona" required fullWidth>
                 <InputLabel htmlFor="Zona">Zona</InputLabel>
-                <Input
+                <Select
                   id="Zona"
                   name="Zona"
                   autoFocus
                   value={this.state.Zona}
                   onChange={e => this.setState({ Zona: e.target.value })}
-                />
+                >
+                    {this.state.Zonas.map(Zona => (
+                    <MenuItem value={Zona.nombre}>
+                      {Zona.nombre}
+                    </MenuItem>
+                  ))}
+                </Select>
               </FormControl>
               
               <Button
