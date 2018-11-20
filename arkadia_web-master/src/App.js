@@ -7,7 +7,6 @@ import SideBar from "./components/SideBar";
 import Proyecto from "./views/Proyecto";
 import Paquete from "./views/Paquete";
 import GestionarZona from "./views/eParking/GestionarZona";
-import VerZonas from "./views/eParking/VerZonas";
 import ReportarNovedad from "./views/eParking/ReportarNovedad";
 import VisualizarEstaciones from "./views/EcoWheels/VisualizarEstaciones";
 import OfertarCurso from "./views/eMentor/OfertarCurso";

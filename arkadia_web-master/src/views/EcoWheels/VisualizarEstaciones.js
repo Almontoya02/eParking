@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import axios from "axios";
-import SimpleTable from "../../components/SimpleTable";
 import Typography from "@material-ui/core/Typography";
 import GoogleMapReact from "google-map-react";
-import PACKAGE from "../../../package.json";
+
 
 import "./eco.css";
 
@@ -25,7 +23,7 @@ const PuntoBicicleta = ({ text }) => (
   </div>
 );
 
-const API_URL = PACKAGE.config.api[process.env.NODE_ENV];
+
 
 class VisualizarEstaciones extends Component {
   static defaultProps = {

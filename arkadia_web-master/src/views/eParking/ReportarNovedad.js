@@ -11,7 +11,8 @@ import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Snackbar from "@material-ui/core/Snackbar";
 import Select from "@material-ui/core/Select";
-import PACKAGE from "../../../package.json";
+import MenuItem from "@material-ui/core/MenuItem";
+
 
 const API_URL = "http://localhost:3001/api";
 
@@ -47,7 +48,6 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 3
   }
 });
-
 class ReportarNovedad extends Component {
   constructor(props) {
     super(props);
@@ -57,23 +57,30 @@ class ReportarNovedad extends Component {
       Tipo: "",
       Descripcion:"",
       Zona:"",
-      Zonas:[],
-      open: false
+      open: false,
+      Zonas:[]
     };
 
     this.crearNovedad = this.crearNovedad.bind(this);
+    this.getZonas=this.getZonas.bind(this);
     this.handleClose = this.handleClose.bind(this);
+  }
+  componentDidMount() {
+    this.getZonas();
+   
   }
 
   handleClose() {
     this.setState({ open: false });
   }
 
+
   getZonas() {
-    axios.get(`${API_URL}/zonas`).then(res => {
+    axios.get(`${API_URL}/zona`).then(res => {
+      console.log(res.body)
       const { data } = res;
       this.setState({
-        estaciones: data
+        Zonas: data
       });
     });
   }
@@ -128,12 +135,18 @@ class ReportarNovedad extends Component {
               </FormControl>
               <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="Tipo">Tipo</InputLabel>
-                <Input
+                <Select
                   id="Tipo"
                   name="Tipo"
                   value={this.state.Tipo}
                   onChange={e => this.setState({ Tipo: e.target.value })}
-                />
+                >
+                <option value="Accidente">Accidente</option>
+                <option value="Novedad en Celda">Novedad en Celda</option>
+                <option value="Infraestructura">Infraestructura</option>
+                <option value="Seguridad">Seguridad</option>
+                
+              </Select>
               </FormControl>
               <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="Descripcion">Descripcion</InputLabel>
@@ -145,18 +158,18 @@ class ReportarNovedad extends Component {
                   onChange={e => this.setState({ Descripcion: e.target.value })}
                 />
               </FormControl>
-              <FormControl margin="Zona" required fullWidth>
+              <FormControl margin="normal" required fullWidth>
                 <InputLabel htmlFor="Zona">Zona</InputLabel>
                 <Select
-                  id="Zona"
+                  id="zona"
                   name="Zona"
                   autoFocus
                   value={this.state.Zona}
                   onChange={e => this.setState({ Zona: e.target.value })}
                 >
                     {this.state.Zonas.map(Zona => (
-                    <MenuItem value={Zona.nombre}>
-                      {Zona.nombre}
+                    <MenuItem value={Zona.NombreZona}>
+                      {Zona.NombreZona}
                     </MenuItem>
                   ))}
                 </Select>
